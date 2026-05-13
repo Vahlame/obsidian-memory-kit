@@ -14,6 +14,7 @@ v2 is **cross-platform** (Windows/Linux/macOS) and **IDE-agnostic**. Canonical a
 2. Merge `config/mcp/basic-memory.json` into your IDE MCP config; replace `<VAULT_PATH>`.
 3. Run `uvx basic-memory mcp` and verify tools (see `docs/testing/manual-checks.md`).
 4. Optional: build `obsidian-memoryd` (`go build ./cmd/obsidian-memoryd`) for debounced git sync.
+5. Optional (large vaults): `pip install -e ./packages/obsidian-memory-rag` then `obsidian-memory-rag index --vault <path>` for local **FTS5** search (`search` / `bench`).
 
 Guided flow: `npx @vahlame/create-obsidian-memory@next`.
 

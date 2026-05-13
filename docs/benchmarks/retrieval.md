@@ -4,7 +4,9 @@ Target (ADR-0014): **P95 < 150 ms** over **10k chunks** on a mid-range laptop wi
 
 ## Current status
 
-The `packages/obsidian-memory-rag` indexer is a **stub**; no benchmark numbers are claimed yet. When the indexer ships, record:
+**Shipped:** incremental **FTS5** index + BM25 search + `bench` CLI (`obsidian-memory-rag`). Run `obsidian-memory-rag bench --vault <path> --iterations 200` on your machine and paste results into your vault runbook if you track perf.
+
+**Not shipped yet:** sqlite-vec embeddings + RRF fusion (ADR-0014 phase 2). When that lands, record:
 
 - hardware/OS,
 - embedding model,

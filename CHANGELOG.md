@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `packages/create-obsidian-memory`, `packages/obsidian-memory-rag`, `packages/obsidian-memory-mcp` (initializer, optional RAG, complementary MCP).
 - `scripts/sync-agents.ts`, `.agents/rules/`, eval suite `evals/adherence.yaml` + `evals/run-adherence-ci.mjs` (CI gate), optional `compose.observability.yml`.
 - `docs/benchmarks/retrieval.md`, `docs/testing/manual-checks.md`.
+- **`obsidian-memory-rag`:** incremental SQLite **FTS5** indexer, BM25 `search`, and `bench` micro-benchmark (stdlib-only; sqlite-vec deferred).
 
 ### Changed
 

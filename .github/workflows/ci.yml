@@ -71,6 +71,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install pytest
+      - run: pip install -e ./packages/obsidian-memory-rag
       - run: pytest packages/obsidian-memory-rag/tests
 
   links:

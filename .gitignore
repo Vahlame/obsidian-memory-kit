@@ -17,6 +17,11 @@ node_modules/
 .pnpm-store/
 yarn.lock
 
+# Python (obsidian-memory-rag local dev / pytest)
+__pycache__/
+*.py[cod]
+*.egg-info/
+
 # Temp extracts (CI / local linting)
 tmp/
 /prompt-ps-extract/
@@ -25,3 +30,6 @@ tmp/
 .cursor/*
 !.cursor/rules/
 !.cursor/rules/**
+
+# Local FTS5 sidecar (obsidian-memory-rag); keep indexes out of git
+**/.obsidian-memory-rag/

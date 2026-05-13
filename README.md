@@ -17,6 +17,7 @@ Los modelos no recuerdan entre sesiones. Externalizar memoria en **Markdown vers
 2. Copia `config/mcp/basic-memory.json` a tu `mcp.json` del IDE y reemplaza `<VAULT_PATH>`.
 3. Ejecuta `uvx basic-memory mcp` (Inspector: ver `docs/testing/manual-checks.md`).
 4. (Opcional) `go build -o obsidian-memoryd ./cmd/obsidian-memoryd` y `obsidian-memoryd watch`.
+5. (Opcional, bóvedas grandes) `pip install -e ./packages/obsidian-memory-rag` y `obsidian-memory-rag index --vault <ruta>` para búsqueda **FTS5** local (`search` / `bench`).
 
 Flujo guiado completo: `npx @vahlame/create-obsidian-memory@next` (beta publicada con tag `next`).
 

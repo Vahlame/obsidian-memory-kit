@@ -38,3 +38,16 @@ With `obsidian-live` or any Streamable HTTP server you configure, verify **`POST
 npm install
 npm run sync-agents:check
 ```
+
+## 6. Local FTS5 sidecar (`obsidian-memory-rag`)
+
+For large vaults, `basic-memory` search is tool-grade; this package adds a **local SQLite FTS5** index (BM25, incremental by `mtime`/`size`) under `vault/.obsidian-memory-rag/`.
+
+```bash
+pip install -e ./packages/obsidian-memory-rag
+obsidian-memory-rag index --vault /abs/path/to/vault
+obsidian-memory-rag search --vault /abs/path/to/vault "your terms"
+obsidian-memory-rag bench --vault /abs/path/to/vault --iterations 200 --query "memory"
+```
+
+Expect `bench` p50 in the low milliseconds on a warm OS page cache for typical personal vaults (not a formal SLA).

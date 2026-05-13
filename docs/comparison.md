@@ -9,7 +9,7 @@ Honest positioning for **v2** (cross-platform, `basic-memory`, optional Go daemo
 | Transport                       | MCP Streamable HTTP (`basic-memory`)    | proprietary            | HTTP SDK                 | HTTP / WS                  | SQL / gRPC                     |
 | Offline-friendly                | Local vault reads yes                   | varies                 | usually no               | if self-host               | if self-host                   |
 | Sync story                      | git (+ optional Syncthing)              | account sync           | service                  | server backup              | replication                    |
-| Retrieval latency at huge scale | optional sqlite-vec sidecar             | opaque                 | service tuned            | strong                     | strongest                      |
+| Retrieval latency at huge scale | optional **FTS5** sidecar + sqlite-vec path (ADR-0014) | opaque                 | service tuned            | strong                     | strongest                      |
 | Setup time                      | minutes (`uvx` + config)                | zero                   | account + SDK            | server                     | schema + indexer               |
 | Compliance hooks                | docs + optional age + OTel redaction    | opaque                 | vendor docs              | your policy                | your policy                    |
 | Best at                         | Human-editable durable notes for agents | quick ephemeral prefs  | app-embedded user memory | agent runtime memory tiers | huge corpora                   |

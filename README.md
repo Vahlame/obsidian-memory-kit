@@ -64,7 +64,7 @@ Flujo guiado completo: `npx @vahlame/create-obsidian-memory@next` (beta publicad
 
 ## Aviso de privacidad
 
-Este repo **no** recopila tus datos. Todo corre local salvo el remoto que **tú** configures. Si activas **Langfuse / OTel**, revisa retención y evita PII en atributos (`docs/observability.md`, `docs/case-study-mep-cr.md`).
+Este repo **no** recopila tus datos. Todo corre local salvo el remoto que **tú** configures. Si activas **Langfuse / OTel**, revisa retención y evita PII en atributos (`docs/observability.md`).
 
 ## Observabilidad
 

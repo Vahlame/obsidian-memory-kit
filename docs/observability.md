@@ -4,4 +4,4 @@
 - **OpenTelemetry** OTLP HTTP exporter (optional deps); propagate W3C `traceparent` via MCP `_meta` when your host supports it.
 - **Langfuse** (optional): use `compose.observability.yml` for a self-hosted stack; set `LANGFUSE_PUBLIC_KEY` / `LANGFUSE_SECRET_KEY` in your environment.
 
-Never log raw tokens or student PII in trace attributes; prefer opaque IDs (see `docs/case-study-mep-cr.md`).
+Never log raw tokens or unnecessary personal identifiers in trace attributes; prefer opaque IDs (`docs/observability.md`).

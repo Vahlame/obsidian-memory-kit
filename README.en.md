@@ -25,7 +25,6 @@ Guided flow: `npx @vahlame/create-obsidian-memory@next`.
 ## Docs
 
 - `docs/comparison.md` — honest positioning vs alternatives.
-- `docs/case-study-mep-cr.md` — education-style deployment sketch + Ley 8968 engineering notes.
 - `docs/observability.md` — telemetry posture.
 
 ## License

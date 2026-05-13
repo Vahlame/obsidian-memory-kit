@@ -10,6 +10,6 @@ Supporting documentation for the **v2** agent memory pattern (`AGENTS.md`, MCP c
 | [`glossary.md`](./glossary.md) | Definitions: MCP, SSE, vault, watchdog, mcp-remote, etc. |
 | [`comparison.md`](./comparison.md) | v2 positioning vs. Cursor built-in memory, mem0, Letta, and other alternatives. |
 | [`migration/v1-to-v2-mcp.md`](./migration/v1-to-v2-mcp.md) | MCP tool mapping v1 → v2. |
-| [`case-study-mep-cr.md`](./case-study-mep-cr.md) | Education-style deployment sketch + Ley 8968 engineering notes. |
+| [`observability.md`](./observability.md) | Telemetry redaction and optional Langfuse / OTel stack notes. |
 
 The archived v1 operational brief is [`legacy/PROMPT_ULTRA_COMPLETO_v1.md`](./legacy/PROMPT_ULTRA_COMPLETO_v1.md). Human onboarding starts at [`README.md`](../README.md).

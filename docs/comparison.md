@@ -29,4 +29,4 @@ mem0 is excellent for **application** memory; this pattern is for **developer / 
 
 ## Markdown vs SQLite
 
-Markdown diffs are human-auditable; SQLite wins on constraints. We bias Markdown for agent memory; use Postgres/Qdrant for product data planes (see `docs/case-study-mep-cr.md`).
+Markdown diffs are human-auditable; SQLite wins on constraints. We bias Markdown for agent memory; use Postgres/Qdrant for multi-tenant or high-scale product backends you control separately from this vault pattern.

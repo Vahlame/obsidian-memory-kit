@@ -20,7 +20,7 @@ Keep PRs focused: one change per PR.
 ## Validation
 
 - [ ] `npm ci && npm run sync-agents:check` passes
-- [ ] `npx markdownlint-cli "**/*.md" --ignore node_modules --ignore docs/legacy/PROMPT_ULTRA_COMPLETO_v1.md` passes
+- [ ] `npx markdownlint-cli "**/*.md" --ignore-path .markdownlintignore` passes
 - [ ] `npx prettier --check "**/*.{json,yml,yaml,md}"` passes
 - [ ] `npx lychee --no-progress --exclude-mail .` passes
 - [ ] `pwsh -File .github/scripts/extract-and-lint.ps1` passes (legacy v1 prompt)

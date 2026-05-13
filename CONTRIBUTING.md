@@ -20,7 +20,7 @@ npm ci
 npm run sync-agents:check
 
 # Markdown lint
-npx markdownlint-cli "**/*.md" --ignore node_modules --ignore docs/legacy/PROMPT_ULTRA_COMPLETO_v1.md
+npx markdownlint-cli "**/*.md" --ignore-path .markdownlintignore
 
 # Formatting
 npx prettier --check "**/*.{json,yml,yaml,md}"
@@ -39,14 +39,14 @@ All must pass. CI mirrors these in `.github/workflows/ci.yml`.
 
 ## Types of changes
 
-| Change | Where it goes | Needs an ADR? |
-|---|---|---|
-| Typo, wording, clarification | the file in question | no |
-| Script fix inside the legacy v1 prompt | `docs/legacy/PROMPT_ULTRA_COMPLETO_v1.md` | no (mention in CHANGELOG) |
-| Known-error addition | `docs/troubleshooting.md` | no |
-| New design decision | new file in `docs/adr/` | **yes** |
-| Cross-platform installer / daemon change | `cmd/`, `packages/`, `config/` | yes |
-| Breaking change to agent contract | discuss in an issue first | yes |
+| Change                                   | Where it goes                             | Needs an ADR?             |
+| ---------------------------------------- | ----------------------------------------- | ------------------------- |
+| Typo, wording, clarification             | the file in question                      | no                        |
+| Script fix inside the legacy v1 prompt   | `docs/legacy/PROMPT_ULTRA_COMPLETO_v1.md` | no (mention in CHANGELOG) |
+| Known-error addition                     | `docs/troubleshooting.md`                 | no                        |
+| New design decision                      | new file in `docs/adr/`                   | **yes**                   |
+| Cross-platform installer / daemon change | `cmd/`, `packages/`, `config/`            | yes                       |
+| Breaking change to agent contract        | discuss in an issue first                 | yes                       |
 
 ## Commit messages
 

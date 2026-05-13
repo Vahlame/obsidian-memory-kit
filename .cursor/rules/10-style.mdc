@@ -1,11 +1,11 @@
 ---
-description: "Code style and contribution hygiene."
+description: "Style conventions and contribution hygiene."
 globs:
   - "**/*.{ts,tsx,js,mjs,cjs,go,py,md,json,yml,yaml}"
 alwaysApply: false
 ---
 
-## Code style
+## Style conventions
 
 - Match existing formatting; run `npx prettier --check` and `markdownlint` before PRs.
 - Prefer small, reviewable commits; conventional prefixes optional but welcome (`feat:`, `fix:`, `docs:`).

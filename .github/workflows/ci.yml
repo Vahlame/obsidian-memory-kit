@@ -20,7 +20,7 @@ jobs:
       - name: install
         run: npm ci
       - name: markdownlint
-        run: npx --yes markdownlint-cli "**/*.md" --ignore node_modules --ignore docs/legacy/PROMPT_ULTRA_COMPLETO_v1.md
+        run: npx --yes markdownlint-cli "**/*.md" --ignore-path .markdownlintignore
       - name: prettier
         run: npx --yes prettier --check "**/*.{json,yml,yaml,md}"
       - name: sync agents

@@ -9,7 +9,7 @@ cursorRules:
     alwaysApply: true
   - output: 10-style.mdc
     source: .agents/rules/10-style.md
-    description: Code style and contribution hygiene.
+    description: Style conventions and contribution hygiene.
     globs:
       - "**/*.{ts,tsx,js,mjs,cjs,go,py,md,json,yml,yaml}"
     alwaysApply: false

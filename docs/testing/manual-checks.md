@@ -25,12 +25,12 @@ With `obsidian-live` or any Streamable HTTP server you configure, verify **`POST
 
 ## 4. IDE rule injection (smoke)
 
-| IDE / agent | What to verify |
-|---|---|
-| Cursor | `.cursor/rules/*.mdc` present; rules appear in Cursor Settings → Rules. |
-| Claude Code | `CLAUDE.md` resolves to `AGENTS.md` content. |
-| GitHub Copilot (Codespaces / VS Code) | `.github/copilot-instructions.md` resolves. |
-| Codex CLI / Zed / Windsurf | Reads `AGENTS.md` per product docs. |
+| IDE / agent                           | What to verify                                                          |
+| ------------------------------------- | ----------------------------------------------------------------------- |
+| Cursor                                | `.cursor/rules/*.mdc` present; rules appear in Cursor Settings → Rules. |
+| Claude Code                           | `CLAUDE.md` resolves to `AGENTS.md` content.                            |
+| GitHub Copilot (Codespaces / VS Code) | `.github/copilot-instructions.md` resolves.                             |
+| Codex CLI / Zed / Windsurf            | Reads `AGENTS.md` per product docs.                                     |
 
 ## 5. Agent sync CI parity
 

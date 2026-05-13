@@ -4,15 +4,15 @@ v1 used the Node package `@smith-and-web/obsidian-mcp-server` with **SSE** on `h
 
 ## Tool mapping (conceptual)
 
-| v1 area (smith-and-web Obsidian MCP) | v2 `basic-memory` | Notes |
-|---|---|---|
-| Read file / note content | `read_note` | Paths are vault-relative; mind `BASIC_MEMORY_HOME`. |
-| Write / create note | `write_note` | Prefer idempotent titles / slugs. |
-| Patch / update body | `edit_note` | Review diff semantics vs v1 patch tools. |
-| Search / grep vault | `search_notes` | Tuning: stopwords, ranking differ from v1. |
-| Build context bundle | `build_context` | Replace ad-hoc “fetch many files” flows. |
-| Recent edits / timeline | `recent_activity` | Analog to “list recent” style tools if exposed in v1. |
-| Obsidian-app-specific hooks | **Optional** `cyanheads/obsidian-mcp-server` | Add-on for live vault I/O; configure `OBSIDIAN_READ_PATHS` / `OBSIDIAN_WRITE_PATHS`. |
+| v1 area (smith-and-web Obsidian MCP) | v2 `basic-memory`                            | Notes                                                                                |
+| ------------------------------------ | -------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Read file / note content             | `read_note`                                  | Paths are vault-relative; mind `BASIC_MEMORY_HOME`.                                  |
+| Write / create note                  | `write_note`                                 | Prefer idempotent titles / slugs.                                                    |
+| Patch / update body                  | `edit_note`                                  | Review diff semantics vs v1 patch tools.                                             |
+| Search / grep vault                  | `search_notes`                               | Tuning: stopwords, ranking differ from v1.                                           |
+| Build context bundle                 | `build_context`                              | Replace ad-hoc “fetch many files” flows.                                             |
+| Recent edits / timeline              | `recent_activity`                            | Analog to “list recent” style tools if exposed in v1.                                |
+| Obsidian-app-specific hooks          | **Optional** `cyanheads/obsidian-mcp-server` | Add-on for live vault I/O; configure `OBSIDIAN_READ_PATHS` / `OBSIDIAN_WRITE_PATHS`. |
 
 ## Tools that may disappear or change names
 

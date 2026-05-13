@@ -1,60 +1,65 @@
-# Cursor + Obsidian Memory (Cross-Device)
+# Cursor + Obsidian Memory System (Full Guide)
 
-Guia simple y detallada para tener memoria persistente de largo plazo en Cursor usando Obsidian y GitHub.
+Guia completa para construir memoria de largo plazo en Cursor con Obsidian, GitHub y automatizacion local.
 
-## Que vas a lograr
+## Resultado final
 
-- Memoria compartida entre dispositivos.
-- Sincronizacion automatica con GitHub.
-- Recuperacion automatica del MCP de Obsidian si se cae.
-- Instalacion rapida en equipos nuevos.
+Con este setup consigues:
 
-## Idea principal
+- memoria persistente entre sesiones y dispositivos;
+- separacion de memoria global y memoria por proyecto;
+- sincronizacion automatica a GitHub;
+- recuperacion automatica del servidor MCP si se cae;
+- instalacion repetible en equipos nuevos.
 
-Los LLM no tienen memoria infinita nativa.  
-La solucion es externalizar la memoria en Markdown:
+## Por que esto funciona
 
-- `MEMORY.md` -> conocimiento estable/global.
-- `SESSION_LOG.md` -> bitacora de sesiones.
-- `PROJECTS/*.md` -> memoria por proyecto.
+Los modelos no guardan "memoria infinita" dentro del contexto interno.  
+Este sistema externaliza la memoria en archivos Markdown versionados:
 
-## Arquitectura
+- `MEMORY.md`: conocimiento global y estable;
+- `SESSION_LOG.md`: historial de trabajo;
+- `PROJECTS/<proyecto>.md`: decisiones y contexto por proyecto.
 
-1. Cursor usa `mcp-remote`.
-2. `mcp-remote` se conecta a `http://127.0.0.1:3001/sse`.
-3. Un servidor Obsidian MCP lee/escribe el vault.
-4. Git sincroniza el vault con GitHub.
-5. Task Scheduler:
-   - auto-sync cada 10 min
-   - watchdog MCP cada 5 min
+Cursor consume esa memoria via MCP, y Git la vuelve durable/cross-device.
 
-## Requisitos
+## Como funciona Cursor en este setup
 
-- Windows 10/11
-- Git
-- Node.js + npm
-- Cursor
-- Obsidian (opcional, pero recomendado para navegar notas)
+1. Cursor lee `%USERPROFILE%\.cursor\mcp.json`.
+2. Se registra el servidor `obsidian-memory`.
+3. Cursor usa `mcp-remote` para conectarse a `http://127.0.0.1:3001/sse`.
+4. Un servidor local Obsidian MCP atiende lectura/escritura del vault.
+5. Task Scheduler mantiene:
+   - auto-sync git cada 10 min (`CursorMemoryAutoSync`);
+   - watchdog MCP cada 5 min (`CursorObsidianMcpWatchdog`).
 
-## Estructura recomendada del vault
+## Estructura del repo de guia
 
-```text
-cursor-memory-vault/
-  MEMORY.md
-  SESSION_LOG.md
-  PROJECTS/
-    TEMPLATE.md
-  SNIPPETS/
-  cursor-install/
-    install-cursor-memory.ps1
-    bootstrap-from-github.ps1
-    sync-memory.ps1
-    enable-auto-sync.ps1
-    ensure-obsidian-mcp.ps1
-    enable-obsidian-mcp-watchdog.ps1
-```
+- `README.md`: overview de arquitectura y flujo.
+- `docs/`: instalacion, operacion y troubleshooting detallado.
+- `template/cursor-memory-vault/`: vault completo listo para usar.
+- `examples/CURSOR_USER_RULE_MEMORY.md`: regla recomendada para User Rules.
+- `scripts/health-check.ps1`: check rapido de salud MCP.
 
-## Configuracion de Cursor MCP
+## Metodos de instalacion
+
+### Metodo A - Rapido (recomendado)
+
+1. Crea repo privado para tu vault.
+2. Copia el contenido de `template/cursor-memory-vault/` a ese repo.
+3. Ejecuta `CursorMemory-Install.cmd` (dentro del template) en cada equipo.
+4. Reinicia Cursor.
+5. Pega la regla de `examples/CURSOR_USER_RULE_MEMORY.md` en User Rules.
+
+### Metodo B - Manual controlado
+
+Sigue `docs/install-manual.md` si quieres revisar cada paso y editar todo a mano.
+
+### Metodo C - Operacion avanzada multi-equipo
+
+Sigue `docs/operations.md` para mantenimiento, recovery, y buenas practicas de equipo.
+
+## Configuracion MCP esperada
 
 Archivo: `%USERPROFILE%\.cursor\mcp.json`
 
@@ -73,61 +78,52 @@ Archivo: `%USERPROFILE%\.cursor\mcp.json`
 }
 ```
 
-## Flujo de instalacion (resumen)
+## Verificacion completa
 
-1. Crear repo privado para el vault.
-2. Subir vault base.
-3. Ejecutar bootstrap en cada equipo nuevo.
-4. Reiniciar Cursor.
-5. Agregar regla de memoria en User Rules.
+### 1) MCP local
 
-## Regla recomendada para Cursor User Rules
+```powershell
+powershell -ExecutionPolicy Bypass -File ".\scripts\health-check.ps1"
+```
 
-Usa la version en `examples/CURSOR_USER_RULE_MEMORY.md`.
+Debe mostrar `StatusCode: 200`.
 
-## Verificacion rapida
+### 2) Cursor puede leer y escribir
 
-En Cursor:
+En chat de Cursor:
 
 1. "Usa `obsidian-memory` y lee `MEMORY.md`."
-2. "Agrega una linea de prueba en `SESSION_LOG.md`."
+2. "Agrega una linea en `SESSION_LOG.md` con texto `test mcp ok`."
 
-En consola:
-
-```powershell
-powershell -NoProfile -Command "(Invoke-WebRequest -Uri 'http://127.0.0.1:3001/health' -UseBasicParsing).StatusCode"
-```
-
-Debe devolver `200`.
-
-## Troubleshooting
-
-### Error: MCP no disponible
-
-- Verifica `mcp.json`.
-- Verifica que responda `http://127.0.0.1:3001/health`.
-- Revisa tarea `CursorObsidianMcpWatchdog`.
-- Reinicia Cursor.
-
-### Se abre ventana CMD cada 10 min
-
-- Ejecuta tareas con `wscript //B //nologo` + `.vbs`.
-- Evita ejecutar `powershell.exe` directo en la tarea.
-
-### Sync falla
-
-- Verifica permisos de repo.
-- Corre manual:
+### 3) Scheduler activo
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "$HOME\Documents\cursor-memory-vault\cursor-install\sync-memory.ps1"
+schtasks /Query /TN "CursorMemoryAutoSync" /V /FO LIST
+schtasks /Query /TN "CursorObsidianMcpWatchdog" /V /FO LIST
 ```
+
+`Ultimo resultado` debe ser `0` con ejecuciones recientes.
+
+## Archivos clave para usar ya
+
+- Vault template: `template/cursor-memory-vault/`
+- Instalador one-click: `template/cursor-memory-vault/CursorMemory-Install.cmd`
+- Scripts de instalacion: `template/cursor-memory-vault/cursor-install/`
+- Regla de memoria: `examples/CURSOR_USER_RULE_MEMORY.md`
 
 ## Seguridad
 
-- Usa repo privado para la memoria real.
-- No guardes secretos.
-- Si expones un token, revocalo y crea uno nuevo.
+- Usa repo privado para memoria real.
+- No guardes secretos en Markdown.
+- Si expones un token, revocalo inmediatamente.
+
+## Documentacion adicional
+
+- `docs/architecture.md`
+- `docs/install-quickstart.md`
+- `docs/install-manual.md`
+- `docs/operations.md`
+- `docs/troubleshooting.md`
 
 ## Licencia
 

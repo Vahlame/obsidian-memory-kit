@@ -1,129 +1,135 @@
-# Cursor + Obsidian Memory System (Full Guide)
+# Cursor + Obsidian Memory System
 
-Guia completa para construir memoria de largo plazo en Cursor con Obsidian, GitHub y automatizacion local.
+Guia completa para montar una memoria persistente, versionada y cross-device para Cursor usando Obsidian + MCP + GitHub.
 
-## Resultado final
+## Para quien es
 
-Con este setup consigues:
+- personas que trabajan en multiples proyectos y quieren continuidad real;
+- equipos que quieren estandarizar memoria operativa;
+- builders que quieren un stack portable y auditable.
 
-- memoria persistente entre sesiones y dispositivos;
-- separacion de memoria global y memoria por proyecto;
-- sincronizacion automatica a GitHub;
-- recuperacion automatica del servidor MCP si se cae;
+## Que obtienes
+
+- memoria durable entre sesiones/dispositivos;
+- organizacion global + por proyecto;
+- sincronizacion automatica con GitHub;
+- watchdog que relanza MCP si se cae;
 - instalacion repetible en equipos nuevos.
 
-## Por que esto funciona
+## Tabla de contenido
 
-Los modelos no guardan "memoria infinita" dentro del contexto interno.  
-Este sistema externaliza la memoria en archivos Markdown versionados:
+- [Arquitectura](#arquitectura)
+- [Instalacion](#instalacion)
+- [Validacion](#validacion)
+- [Operacion diaria](#operacion-diaria)
+- [Seguridad](#seguridad)
+- [Documentacion completa](#documentacion-completa)
 
-- `MEMORY.md`: conocimiento global y estable;
-- `SESSION_LOG.md`: historial de trabajo;
-- `PROJECTS/<proyecto>.md`: decisiones y contexto por proyecto.
+## Arquitectura
 
-Cursor consume esa memoria via MCP, y Git la vuelve durable/cross-device.
-
-## Como funciona Cursor en este setup
-
-1. Cursor lee `%USERPROFILE%\.cursor\mcp.json`.
-2. Se registra el servidor `obsidian-memory`.
-3. Cursor usa `mcp-remote` para conectarse a `http://127.0.0.1:3001/sse`.
-4. Un servidor local Obsidian MCP atiende lectura/escritura del vault.
-5. Task Scheduler mantiene:
-   - auto-sync git cada 10 min (`CursorMemoryAutoSync`);
-   - watchdog MCP cada 5 min (`CursorObsidianMcpWatchdog`).
-
-## Estructura del repo de guia
-
-- `README.md`: overview de arquitectura y flujo.
-- `docs/`: instalacion, operacion y troubleshooting detallado.
-- `template/cursor-memory-vault/`: vault completo listo para usar.
-- `examples/CURSOR_USER_RULE_MEMORY.md`: regla recomendada para User Rules.
-- `scripts/health-check.ps1`: check rapido de salud MCP.
-
-## Metodos de instalacion
-
-### Metodo A - Rapido (recomendado)
-
-1. Crea repo privado para tu vault.
-2. Copia el contenido de `template/cursor-memory-vault/` a ese repo.
-3. Ejecuta `CursorMemory-Install.cmd` (dentro del template) en cada equipo.
-4. Reinicia Cursor.
-5. Pega la regla de `examples/CURSOR_USER_RULE_MEMORY.md` en User Rules.
-
-### Metodo B - Manual controlado
-
-Sigue `docs/install-manual.md` si quieres revisar cada paso y editar todo a mano.
-
-### Metodo C - Operacion avanzada multi-equipo
-
-Sigue `docs/operations.md` para mantenimiento, recovery, y buenas practicas de equipo.
-
-## Configuracion MCP esperada
-
-Archivo: `%USERPROFILE%\.cursor\mcp.json`
-
-```json
-{
-  "mcpServers": {
-    "obsidian-memory": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "mcp-remote",
-        "http://127.0.0.1:3001/sse"
-      ]
-    }
-  }
-}
+```mermaid
+flowchart LR
+    A[Cursor Chat Agent] --> B[mcp-remote]
+    B --> C[Obsidian MCP Server SSE :3001]
+    C --> D[Vault Markdown]
+    D --> E[Git Local Repo]
+    E --> F[GitHub Private Repo]
+    G[Task: AutoSync 10m] --> E
+    H[Task: MCP Watchdog 5m] --> C
 ```
 
-## Verificacion completa
+### Por que funciona
 
-### 1) MCP local
+El modelo no "recuerda todo" entre sesiones.  
+Este sistema saca la memoria fuera del modelo y la guarda en Markdown:
+
+- `MEMORY.md`: reglas/preferencias globales estables;
+- `SESSION_LOG.md`: historial cronologico de decisiones;
+- `PROJECTS/<proyecto>.md`: contexto y decisiones por proyecto.
+
+Cursor consulta esa memoria por MCP y GitHub la replica entre dispositivos.
+
+## Instalacion
+
+### Opcion recomendada (quickstart)
+
+1. Crea un repo privado para tu vault.
+2. Copia `template/cursor-memory-vault/` a ese repo.
+3. Ejecuta `template/cursor-memory-vault/CursorMemory-Install.cmd`.
+4. Reinicia Cursor.
+5. Pega `examples/CURSOR_USER_RULE_MEMORY.md` en User Rules.
+
+Guia detallada: `docs/install-quickstart.md`.
+
+### Opcion manual
+
+Configura paso a paso y valida cada capa:
+
+- `docs/install-manual.md`
+
+### Opcion de equipo (operacion)
+
+Incluye mantenimiento, recovery y rutina operativa:
+
+- `docs/operations.md`
+
+## Validacion
+
+### 1) Salud local MCP
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File ".\scripts\health-check.ps1"
 ```
 
-Debe mostrar `StatusCode: 200`.
-
-### 2) Cursor puede leer y escribir
-
-En chat de Cursor:
-
-1. "Usa `obsidian-memory` y lee `MEMORY.md`."
-2. "Agrega una linea en `SESSION_LOG.md` con texto `test mcp ok`."
-
-### 3) Scheduler activo
+### 2) Diagnostico completo
 
 ```powershell
-schtasks /Query /TN "CursorMemoryAutoSync" /V /FO LIST
-schtasks /Query /TN "CursorObsidianMcpWatchdog" /V /FO LIST
+powershell -ExecutionPolicy Bypass -File ".\scripts\doctor.ps1"
 ```
 
-`Ultimo resultado` debe ser `0` con ejecuciones recientes.
+### 3) Validacion desde Cursor
 
-## Archivos clave para usar ya
+En chat:
 
-- Vault template: `template/cursor-memory-vault/`
-- Instalador one-click: `template/cursor-memory-vault/CursorMemory-Install.cmd`
-- Scripts de instalacion: `template/cursor-memory-vault/cursor-install/`
-- Regla de memoria: `examples/CURSOR_USER_RULE_MEMORY.md`
+1. "Usa `obsidian-memory` y lee `MEMORY.md`."
+2. "Agrega una linea en `SESSION_LOG.md` con `test mcp ok`."
+
+## Operacion diaria
+
+- usa `PROJECTS/<proyecto>.md` para decisiones especificas;
+- guarda checkpoints cada 3-5 mensajes si hubo avance;
+- promueve aprendizajes durables a `MEMORY.md`;
+- deja resumen corto al cierre en `SESSION_LOG.md`.
+
+Prompts listos: `examples/PROMPTS.md`.
 
 ## Seguridad
 
-- Usa repo privado para memoria real.
-- No guardes secretos en Markdown.
-- Si expones un token, revocalo inmediatamente.
+- usa repo privado para memoria real;
+- no guardes secretos ni credenciales;
+- rota tokens si fueron expuestos;
+- aplica principio de minimo privilegio.
 
-## Documentacion adicional
+Hardening completo: `docs/security-hardening.md`.
+
+## Documentacion completa
 
 - `docs/architecture.md`
+- `docs/how-cursor-mcp-works.md`
 - `docs/install-quickstart.md`
 - `docs/install-manual.md`
 - `docs/operations.md`
 - `docs/troubleshooting.md`
+- `docs/faq.md`
+- `docs/security-hardening.md`
+- `docs/adoption-playbook.md`
+
+## Estructura del repo
+
+- `template/cursor-memory-vault/`: vault y scripts listos.
+- `examples/`: reglas y prompts listos para copiar.
+- `scripts/`: checks operativos del sistema.
+- `docs/`: guias tecnicas completas.
 
 ## Licencia
 

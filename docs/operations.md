@@ -15,6 +15,12 @@
 powershell -ExecutionPolicy Bypass -File "$HOME\Documents\cursor-memory-vault\cursor-install\sync-memory.ps1"
 ```
 
+### Estado general (tasks + health)
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "$HOME\Documents\cursor-memory-vault\cursor-install\check-status.ps1"
+```
+
 ### Activar auto-sync
 
 ```powershell
@@ -31,6 +37,12 @@ powershell -ExecutionPolicy Bypass -File "$HOME\Documents\cursor-memory-vault\cu
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File "$HOME\Documents\cursor-memory-vault\cursor-install\enable-obsidian-mcp-watchdog.ps1"
+```
+
+### Diagnostico completo desde repo guia
+
+```powershell
+powershell -ExecutionPolicy Bypass -File ".\scripts\doctor.ps1"
 ```
 
 ## Multi-device

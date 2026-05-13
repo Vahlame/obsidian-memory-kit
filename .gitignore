@@ -15,7 +15,6 @@ desktop.ini
 # Local tooling
 node_modules/
 .pnpm-store/
-package-lock.json
 yarn.lock
 
 # Temp extracts (CI / local linting)
@@ -23,4 +22,6 @@ tmp/
 /prompt-ps-extract/
 
 # Cursor / agent caches if anyone uses them at the repo root
-.cursor/
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**

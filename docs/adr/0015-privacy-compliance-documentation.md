@@ -1,4 +1,4 @@
-# ADR-0015: Document a generic privacy posture for PII-adjacent deployments
+# ADR-0015: Keep privacy guidance generic in public docs
 
 - **Status:** Accepted
 - **Date:** 2026-05-13
@@ -6,21 +6,21 @@
 
 ## Context
 
-Some adopters wire this pattern into environments that process **personal data** (end users, customers, or employees). Laws and regulator expectations vary by jurisdiction and sector. The repo should give **engineering-oriented documentation** (data minimization, retention, access control, observability redaction) without anchoring to a specific country, agency, or private project.
+People use Markdown vaults for notes that may include **sensitive or personal** information. Optional telemetry (OpenTelemetry, Langfuse) and MCP tooling can accidentally widen the blast radius if prompts, tokens, or identifiers end up in logs or traces. The public repo should document **practical guardrails** (redaction, retention, opt-in telemetry) without pretending to be legal advice or tying the project to any one customer, regulator, or geography.
 
 ## Decision
 
-Maintain **jurisdiction-neutral** privacy guidance: checklists that teams map to their own DPIA or legal review with counsel. Telemetry docs stress **no raw PII** in trace attributes and **opt-in** exporters. Do not ship legal claims or named statutes in this public repository.
+Document **short, jurisdiction-neutral** guidance in `docs/observability.md`, `SECURITY.md`, and related files: minimize what gets logged, prefer opaque IDs in traces, keep encryption (for example `age`) optional, and tell readers to run their own security and privacy review where their situation requires it.
 
 ## Consequences
 
-- **Positive:** Reduces accidental coupling between this OSS guide and any single customer or geography.
-- **Negative:** Readers must still engage counsel for binding compliance work.
-- **Neutral:** Optional `age` encryption and OTel/Langfuse docs remain generic.
+- **Positive:** Useful for typical users; stays maintainable and avoids over-specific narratives in the repo.
+- **Negative:** Teams with strict regulatory needs must still involve their own experts.
+- **Neutral:** Optional stacks (`compose.observability.yml`) remain examples only.
 
 ## Alternatives considered
 
-- **Named statutes / sector case studies in-repo:** Rejected for this public repo — too easy to correlate with unrelated private workstreams.
+- **Long, customer-specific compliance write-ups in this repo:** Rejected — hard to maintain and easy to misread as official legal guidance.
 
 ## References
 

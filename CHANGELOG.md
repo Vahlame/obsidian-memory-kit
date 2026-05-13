@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
-- ADR-0010–0015 (basic-memory, `AGENTS.md`, Go daemon, Syncthing, hybrid RAG, generic privacy documentation posture).
+- ADR-0010–0015 (basic-memory, `AGENTS.md`, Go daemon, Syncthing, hybrid RAG, generic privacy notes in docs).
 - `config/mcp/*.json` samples, `docs/migration/v1-to-v2-mcp.md`, `docs/security/mcp-remote-rce.md`.
 - `cmd/obsidian-memoryd/` cross-platform daemon skeleton + `.github/workflows` updates for Go/Node/Python/evals.
 - `packages/create-obsidian-memory`, `packages/obsidian-memory-rag`, `packages/obsidian-memory-mcp` (initializer, optional RAG, complementary MCP).

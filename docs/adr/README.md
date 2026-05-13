@@ -18,7 +18,7 @@ Each file in this directory captures one design decision: what was chosen, what 
 | [ADR-0012](./0012-go-daemon-cross-platform.md) | Cross-platform Go daemon (`obsidian-memoryd`) replaces PowerShell + Task Scheduler | Accepted |
 | [ADR-0013](./0013-syncthing-as-transport.md) | Syncthing as an optional sync transport | Accepted |
 | [ADR-0014](./0014-hybrid-retrieval-sqlite-vec.md) | Hybrid retrieval (FTS5 + sqlite-vec) as optional RAG sidecar | Accepted |
-| [ADR-0015](./0015-privacy-compliance-documentation.md) | Document a generic privacy posture for PII-adjacent deployments | Accepted |
+| [ADR-0015](./0015-privacy-compliance-documentation.md) | Generic privacy / telemetry guardrails in docs (no legal advice) | Accepted |
 
 ## Template
 

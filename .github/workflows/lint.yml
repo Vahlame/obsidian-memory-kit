@@ -14,8 +14,8 @@ jobs:
     name: markdown
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: 20
       - name: markdownlint
@@ -25,8 +25,8 @@ jobs:
     name: json
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: 20
       - name: prettier
@@ -43,18 +43,18 @@ jobs:
     name: links
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: lychee
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --no-progress --exclude-mail --max-redirects 5 .
+          args: --no-progress --max-redirects 5 .
           fail: true
 
   powershell:
     name: powershell
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: setup pwsh
         shell: bash
         run: pwsh -v

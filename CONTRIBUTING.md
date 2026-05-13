@@ -23,7 +23,7 @@ npx markdownlint-cli "**/*.md" --ignore node_modules
 npx prettier --check "**/*.json"
 
 # Link check
-npx lychee --no-progress --exclude-mail .
+npx lychee --no-progress .
 
 # Extract embedded PowerShell from the prompt and lint with PSScriptAnalyzer
 pwsh -File .github/scripts/extract-and-lint.ps1
